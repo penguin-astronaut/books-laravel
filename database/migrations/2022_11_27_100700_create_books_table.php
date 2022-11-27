@@ -13,16 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        $roles = ['author', 'admin'];
-
-        Schema::create('users', function (Blueprint $table) use ($roles) {
+        Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->enum('roles', $roles)->default('author');
-            $table->rememberToken();
+            $table->string('title', 150);
+            $table->text('description');
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('books');
     }
 };
