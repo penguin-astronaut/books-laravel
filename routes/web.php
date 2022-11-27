@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::prefix('authors')->name('authors.')->controller(AuthorController::class)->group(function () {
+   Route::get('/', 'index')->name('index');
+   Route::get('/{id}', 'show')->name('show');
+});
