@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BooksController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +23,19 @@ Route::prefix('authors')->name('authors.')->controller(AuthorController::class)-
    Route::get('/', 'index')->name('index');
    Route::get('/{id}', 'show')->name('show');
 });
+
+Route::prefix('books')
+    ->name('books.')
+    ->controller(BooksController::class)
+    ->group(function() {
+        Route::get('/{id}', 'show')->name('show')->where('id', '\d+');;
+
+        Route::middleware('auth')->group(function () {
+            Route::get('/create', 'create')->name('create');
+            Route::post('/store', 'store')->name('store');
+
+            Route::put('/update/{id}', 'update')->name('update')->middleware('bookOwner');
+            Route::get('/delete/{id}', 'delete')->name('delete')->middleware('bookOwner');;
+        });
+    }
+);

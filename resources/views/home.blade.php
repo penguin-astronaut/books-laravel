@@ -28,10 +28,7 @@
                             <a href="{{ route('authors.show', ['id' => $book->author->id]) }}" class="link-info">{{$book->author->name}}</a>
                         </p>
                         <div class="d-flex">
-                            <a href="#" class="btn btn-info me-2">Подробнее</a>
-                            @if(auth()->user() && $book->author->id == auth()->user()->id)
-                                <a href="#" type="button" class="btn btn-danger">Удалить</a>
-                            @endif
+                            <a href="{{ route('books.show', ['id' => $book->id]) }}" class="btn btn-info">Подробнее</a>
                         </div>
 
                         <hr>
