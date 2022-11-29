@@ -19,7 +19,7 @@
                                     class="form-control @error('title') is-invalid @enderror"
                                     id="name" name="title"
                                     value="{{ $book->title }}"
-                                    {{ auth()->user()->hasBookAccess($book) ? '' : 'readonly' }}
+                                    {{ auth()->user() && auth()->user() && auth()->user()->hasBookAccess($book) ? '' : 'readonly' }}
                                 >
                                 @error('title')
                                 <span class="invalid-feedback" role="alert">
@@ -30,7 +30,7 @@
                             <div class="mb-3">
                                 <label for="description" class="form-label">Описание</label>
                                 <textarea
-                                    {{ auth()->user()->hasBookAccess($book) ? '' : 'readonly' }}
+                                    {{ auth()->user() && auth()->user()->hasBookAccess($book) ? '' : 'readonly' }}
                                     class="form-control @error('description') is-invalid @enderror"
                                     id="description"
                                     name="description">{{ $book->description }}</textarea>

@@ -20,7 +20,7 @@
                                     id="name"
                                     name="name"
                                     value="{{ $author->name }}"
-                                    @auth() {{ auth()->user()->isAdmin() ? '' : 'readonly' }} @endauth
+                                    {{ auth()->user() && auth()->user()->isAdmin() ? '' : 'readonly' }}
                                 >
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -39,7 +39,7 @@
                                     placeholder="name@example.com"
                                     value="{{ $author->email }}"
                                     value="{{ $author->name }}"
-                                    @auth() {{ auth()->user()->isAdmin() ? '' : 'readonly' }} @endauth
+                                    {{ auth()->user() && auth()->user()->isAdmin() ? '' : 'readonly' }}
                                 >
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
