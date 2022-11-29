@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $books = Book::with('author')->paginate();
+        $books = Book::with('author')->orderByDesc('id')->paginate();
 
         return view('home', ['books' => $books]);
     }

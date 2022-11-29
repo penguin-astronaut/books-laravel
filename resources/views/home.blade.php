@@ -8,11 +8,58 @@
                 <div class="card mb-3">
                     <div class="card-header"><h2>Автор</h2></div>
                     <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item "><span class="fw-bold">Имя:</span> {{ $author->name }}</li>
-                            <li class="list-group-item "><span class="fw-bold">Email:</span> {{ $author->email }}</li>
-                            <li class="list-group-item "><span class="fw-bold">Количество книг:</span> {{ $books->total() }}</li>
-                        </ul>
+                        <form method="POST" action="{{ route('authors.update', ['id' => $author->id]) }}">
+                            @csrf
+                            @method('PUT')
+
+                            <div class="form-group mb-3">
+                                <label for="name">Name</label>
+                                <input
+                                    type="text"
+                                    class="form-control @error('name') is-invalid @enderror"
+                                    id="name"
+                                    name="name"
+                                    value="{{ $author->name }}"
+                                    @auth() {{ auth()->user()->isAdmin() ? '' : 'readonly' }} @endauth
+                                >
+                                @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="email">Email</label>
+                                <input
+                                    type="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    id="email"
+                                    name="email"
+                                    placeholder="name@example.com"
+                                    value="{{ $author->email }}"
+                                    value="{{ $author->name }}"
+                                    @auth() {{ auth()->user()->isAdmin() ? '' : 'readonly' }} @endauth
+                                >
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <ul class="list-group">
+                                <li class="list-group-item "><span class="fw-bold">Количество книг:</span> {{ $books->total() }}</li>
+                            </ul>
+                            @auth()
+                                @if (auth()->user()->isAdmin())
+                                    <div class="mt-3">
+                                        <a href="{{ route('authors.delete', ['id' => $author->id]) }}" onclick="return confirm('Are you sure?')"  type="button" class="btn btn-danger">Удалить</a>
+                                        <button class="btn btn-success">Сохранить</button>
+                                    </div>
+
+                                @endif
+                            @endauth
+                        </form>
                     </div>
                 </div>
             @endisset

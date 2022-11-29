@@ -35,6 +35,11 @@
                             <a class="nav-link" href="{{ route('authors.index') }}">Авторы</a>
                         </li>
                         @auth()
+                        @if(auth()->user()->isAdmin())
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('authors.create') }}">Создать автора</a>
+                                </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('books.create') }}">Добавить книгу</a>
                         </li>

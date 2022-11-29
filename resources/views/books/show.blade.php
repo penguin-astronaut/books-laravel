@@ -19,7 +19,7 @@
                                     class="form-control @error('title') is-invalid @enderror"
                                     id="name" name="title"
                                     value="{{ $book->title }}"
-                                    {{ auth()->id() !== $book->user_id ? 'readonly' : '' }}
+                                    {{ auth()->user()->hasBookAccess($book) ? '' : 'readonly' }}
                                 >
                                 @error('title')
                                 <span class="invalid-feedback" role="alert">
@@ -30,7 +30,7 @@
                             <div class="mb-3">
                                 <label for="description" class="form-label">Описание</label>
                                 <textarea
-                                    {{ auth()->id() !== $book->user_id ? 'readonly' : '' }}
+                                    {{ auth()->user()->hasBookAccess($book) ? '' : 'readonly' }}
                                     class="form-control @error('description') is-invalid @enderror"
                                     id="description"
                                     name="description">{{ $book->description }}</textarea>
@@ -41,7 +41,7 @@
                                 @enderror
                             </div>
                             @auth()
-                                @if (auth()->id() == $book->user_id)
+                                @if (auth()->user()->hasBookAccess($book))
                                     <a href="{{ route('books.delete', ['id' => $book->id]) }}" onclick="return confirm('Are you sure?')"  type="button" class="btn btn-danger" id="deleteBook">Удалить</a>
                                     <button class="btn btn-success">Сохранить</button>
                                 @endif
